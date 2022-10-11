@@ -5,6 +5,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,9 +21,7 @@ import com.google.gson.Gson;
 import ifpr.pgua.eic.vendinha2022.model.entities.Cliente;
 import ifpr.pgua.eic.vendinha2022.model.entities.Produto;
 import ifpr.pgua.eic.vendinha2022.model.entities.Venda;
-import ifpr.pgua.eic.vendinha2022.model.results.FailResult;
 import ifpr.pgua.eic.vendinha2022.model.results.Result;
-import ifpr.pgua.eic.vendinha2022.model.results.SuccessResult;
 
 public class GerenciadorLoja {
     
@@ -50,8 +53,30 @@ public class GerenciadorLoja {
             return Result.fail("Cliente já cadastrado!");
         }
 
+        
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://wagnerweinert.com.br:3306/tads21_yuri","tads21_yuri","tads21_yuri");
+            
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO oo_clientes(nome,cpf,email,telefone) VALUES(?,?,?,?)");
+
+            pstm.setString(1, nome);
+            pstm.setString(2, cpf);
+            pstm.setString(3, email);
+            pstm.setString(4, telefone);
+
+            pstm.execute();
+
+            pstm.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return Result.fail(e.getMessage());
+        }
+
         Cliente cliente = new Cliente(nome,cpf,email,telefone);
         clientes.add(cliente);
+        
 
         return Result.success("Cliente cadastrado com sucesso!");
     }
@@ -70,6 +95,30 @@ public class GerenciadorLoja {
     }
 
     public List<Cliente> getClientes(){
+        clientes.clear();
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://wagnerweinert.com.br:3306/tads21_yuri","tads21_yuri","tads21_yuri");
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM oo_clientes");
+
+            ResultSet rs = pstm.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
+                String email = rs.getString("email");
+                String telefone = rs.getString("telefone");
+
+                Cliente c = new Cliente(id, nome, cpf, email, telefone);
+                clientes.add(c);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+
         return Collections.unmodifiableList(clientes);
     }
 
@@ -86,6 +135,20 @@ public class GerenciadorLoja {
 
         return Result.success("Produto cadastrado com sucesso!");
 
+    }
+
+
+    public Result atualizarProduto(String nome, double novoValor, double novaQuantidadeEstoque){
+        Optional<Produto> busca = produtos.stream().filter((cli)->cli.getNome().equals(nome)).findFirst();
+        
+        if(busca.isPresent()){
+            Produto produto = busca.get();
+            produto.setQuantidadeEstoque(novaQuantidadeEstoque);;
+            produto.setValor(novoValor);
+
+            return Result.success("Cliente atualizado com sucesso!");
+        }
+        return Result.fail("Cliente não encontrado!");
     }
 
     public List<Produto> getProdutos(){

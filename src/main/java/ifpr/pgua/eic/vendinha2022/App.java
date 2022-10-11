@@ -10,7 +10,9 @@ import java.io.IOException;
 
 import ifpr.pgua.eic.vendinha2022.controllers.TelaClientes;
 import ifpr.pgua.eic.vendinha2022.controllers.TelaPrincipal;
+import ifpr.pgua.eic.vendinha2022.controllers.TelaProdutos;
 import ifpr.pgua.eic.vendinha2022.controllers.ViewModels.TelaClientesViewModel;
+import ifpr.pgua.eic.vendinha2022.controllers.ViewModels.TelaProdutoViewModel;
 import ifpr.pgua.eic.vendinha2022.model.repositories.GerenciadorLoja;
 import ifpr.pgua.eic.vendinha2022.utils.BaseAppNavigator;
 import ifpr.pgua.eic.vendinha2022.utils.ScreenRegistryFXML;
@@ -29,14 +31,14 @@ public class App extends BaseAppNavigator {
         super.init();
         gerenciador = new GerenciadorLoja();
         //gerenciador.geraFakes();
-        gerenciador.carregar();
+        //gerenciador.carregar();
     }
 
     @Override
     public void stop() throws Exception {
         super.stop();
 
-        gerenciador.salvar();
+        //gerenciador.salvar();
     }
 
 
@@ -56,7 +58,8 @@ public class App extends BaseAppNavigator {
     @Override
     public void registrarTelas() {
         registraTela("PRINCIPAL", new ScreenRegistryFXML(getClass(), "fxml/principal.fxml", (o)->new TelaPrincipal()));
-        registraTela("CLIENTES", new ScreenRegistryFXML(getClass(), "fxml/clientes.fxml", (o)->new TelaClientes(new TelaClientesViewModel(gerenciador))));  
+        registraTela("CLIENTES", new ScreenRegistryFXML(getClass(), "fxml/clientes.fxml", (o)->new TelaClientes(new TelaClientesViewModel(gerenciador))));
+        registraTela("PRODUTOS", new ScreenRegistryFXML(getClass(), "fxml/produtos.fxml", (o)->new TelaProdutos(new TelaProdutoViewModel(gerenciador))));  
     }
 
 

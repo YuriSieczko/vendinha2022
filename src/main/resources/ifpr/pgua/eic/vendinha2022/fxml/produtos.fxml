@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.vendinha2022.controllers.TelaClientes">
+<VBox prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.vendinha2022.controllers.TelaProdutos">
    <children>
       <Pane prefHeight="46.0" prefWidth="780.0">
          <children>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="4.0" prefHeight="16.0" prefWidth="780.0" text="Clientes" />
+            <Label alignment="CENTER" layoutX="1.0" layoutY="4.0" prefHeight="16.0" prefWidth="780.0" text="Produtos" />
          </children>
       </Pane>
       <GridPane alignment="CENTER_RIGHT" hgap="5.0" prefHeight="155.0" prefWidth="800.0">
@@ -34,13 +34,13 @@
         </rowConstraints>
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="74.0" text="Nome:" />
-            <TextField fx:id="tfNome" promptText="Digite o nome do cliente" GridPane.columnIndex="1" />
-            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="92.0" text="CPF:" GridPane.columnIndex="2" />
-            <TextField fx:id="tfCPF" promptText="Digite o CPF" GridPane.columnIndex="3" />
-            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="77.0" text="Telefone:" GridPane.rowIndex="1" />
-            <TextField fx:id="tfTelefone" promptText="Digite o telefone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tfEmail" promptText="Digite o e-mail" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="91.0" text="E-mail:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="tfNome" promptText="Digite o nome do produto" GridPane.columnIndex="1" />
+            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="92.0" text="Valor:" GridPane.columnIndex="2" />
+            <TextField fx:id="tfValor" promptText="Digite o Valor" GridPane.columnIndex="3" />
+            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="77.0" text="Descrição:" GridPane.rowIndex="1" />
+            <TextField fx:id="tfDescricao" promptText="Digite a descrição" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfQuantidadeEstoque" promptText="Digite a Quantidade de Produto" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="91.0" text="Quantidade de produto:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <MFXButton fx:id="btCadastrar" buttonType="RAISED" onAction="#cadastrar" text="Cadastrar" />
@@ -49,13 +49,13 @@
             </HBox>
          </children>
       </GridPane>
-      <TableView fx:id="tbClientes" prefHeight="424.0" prefWidth="800.0" onMouseClicked="#atualizar">
+      <TableView fx:id="tbProdutos" prefHeight="424.0" prefWidth="800.0" onMouseClicked="#atualizar">
         <columns>
           <TableColumn fx:id="tbcId" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="tbcNome" prefWidth="278.0" text="Nome" />
-            <TableColumn fx:id="tbcCpf" prefWidth="137.0" text="CPF" />
-            <TableColumn fx:id="tbcEmail" prefWidth="146.0" text="E-mail" />
-            <TableColumn fx:id="tbcTelefone" prefWidth="143.0" text="Telefone" />
+            <TableColumn fx:id="tbcValor" prefWidth="137.0" text="Valor" />
+            <TableColumn fx:id="tbcDescricao" prefWidth="146.0" text="Descrição" />
+            <TableColumn fx:id="tbcQuantidadeEstoque" prefWidth="143.0" text="Quantidade Estoque" />
         </columns>
       </TableView>
    </children>
